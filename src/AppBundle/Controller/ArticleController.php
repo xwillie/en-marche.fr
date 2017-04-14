@@ -100,6 +100,29 @@ class ArticleController extends Controller
     }
 
     /**
+     * @Route("/facebookfeed.xml", name="articles_facebookfeed")
+     * @Method("GET")
+     */
+    public function facebookFeedAction(): Response
+    {
+        /** @var CacheItemPoolInterface $cache */
+        $cache = $this->get('cache.app');
+        $cachedRenderedInstantArticles = $cache->getItem('rss_feed');
+
+        if (!$cachedRenderedInstantArticles->isHit()) {
+            $generator = $this->get('app.feed_generator.article');
+            $feed = $generator->buildFeed($this->getDoctrine()->getRepository(Article::class)->findAllForFeed());
+
+            $cachedRenderedInstantArticles->set($feed->render());
+            $cachedRenderedInstantArticles->expiresAfter($this->getParameter('feed_ttl') * 60);
+
+            $cache->save($cachedRenderedInstantArticles);
+        }
+
+        return new Response($cachedRenderedInstantArticles->get(), Response::HTTP_OK, ['Content-Type' => 'application/rss+xml']);
+    }
+
+    /**
      * @param int $articlesCount
      * @param int $requestedPageNumber
      * @param int $itemsPerPage
