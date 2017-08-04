@@ -171,6 +171,9 @@ legislative_campaign_contact_message.role.invalid: Le role que vous occupez dans
 legislative_campaign_contact_message.recipient.invalid: Le service auquel vous souhaitez adresser ce message est invalide.
 
 #
-# Summary
+# Summary / Resume
 #
 summary.spanable_item.length.invalid: L'événement doit être en cours ou avoir une date de fin.
+summary_form.contribution_wish: Je décris mon profil et mes motivations.
+summary_form.availabilities: Vous devez cocher au minimum 1 élément.
+summary_form.job_locations: Vous devez cocher au minimum 1 élément.
