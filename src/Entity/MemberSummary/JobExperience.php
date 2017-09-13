@@ -128,6 +128,11 @@ class JobExperience implements SummaryItemPositionableInterface
      */
     private $summary;
 
+    public function __toString(): string
+    {
+        return $this->company;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
